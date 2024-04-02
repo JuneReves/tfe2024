@@ -1,0 +1,48 @@
+{% extends "global/Page.html" %} {% load otree %} {% block content %}
+<div dir='rtl' style='text-align: right; overflow: auto'>
+    <div style="width:100%;">
+        <p>
+            דירוגך הסופי הוא <b>{{rank}}</b> מתוך <b>{{players_num}}</b>.
+            <br><br>
+            זכית ב-<b>{{wins}}</b> סבבים מתוך 30, ובסך הכול זכית ב-{{points}} נקודות.
+            <br><br>
+            בסך הכול הרווחת <b>{{points}}</b> נקודות, כלומר <b>{{payoff}}</b> שקלים.
+            <br><br>
+            לחץ על מקש הרווח כדי להמשיך לשאלון הסיכום, ובסיומו גש לנסיינים לקבלת התשלום.
+        </p>
+        <p><b>לחצ/י על מקש הרווח כדי להמשיך</b></p>
+    </div>
+    <div>
+        <p>
+            <table class="table">
+                <tr>
+                    <td>מספר הטלה</td>
+                    <td>עץ</td>
+                    <td>פלי</td>
+                    <td>תוצאה</td>
+                    <td>דירוג</td>
+                    <td>בונוס</td>
+                </tr>
+                {% for i in data %}
+                <tr>
+                    <td>{{i.round}}</td>
+                    <td>{{i.heads}} ({{ i.heads_per }}%)</td>
+                    <td>{{i.tails}} ({{ i.tails_per }}%)</td>
+                    <td>{{i.result}} (ניחושך היה {{i.correctness}})</td>
+                    <td>{{i.percentile}}% ({{i.rank}} מתוך {{i.total}})</td>
+                    <td>{{i.payoff}} נקודות</td>
+                </tr>
+                {% endfor %}
+            </table>
+    </div>
+</div>
+<button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>המשך</button>
+<script>
+    document.body.addEventListener('keydown', function(e) {
+        if (e.keyCode == 32) {
+            e.preventDefault()
+            document.getElementById('submitButton').click()
+        }
+    })
+</script>
+{% endblock %}

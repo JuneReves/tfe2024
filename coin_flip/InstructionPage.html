@@ -1,0 +1,23 @@
+{% extends "global/Page.html" %} {% load otree %} {% block content %}
+<div dir='rtl' style='text-align: right; overflow: auto'>
+    <div>
+        <p>
+            בחלק זה יוטל מטבע עשר פעמים. עבור כל הטלה, יהיו לרשותך 30 שניות כדי לנחש האם תוצאת ההטלה תהיה עץ או פלי.<br> אם תהיה/תהיי בין <b>{{percent}}% המשתתפים ({{ num }})</b> שניחושם הוא הקרוב ביותר לתוצאות האמיתיות של ההטלה, תזכה/י ב-<b>{{gain}}</b> נקודות עבור כל
+            ניחוש נכון, אחרת לא תזכה/י בנקודות כלל.
+            <br> בצד המסך תראה/י את התפלגות ניחושי המשתתפים בין עץ לפלי בכל ההטלות שקדמו להטלה זו, במספרים ובאחוזים.<br>
+            התוצאות האמיתיות של הטלת המטבע יוצגו מיד עם תום הספירה לאחור עבור כל ניחוש.<br>
+            <b>לחצ/י על מקש הרווח כאשר את/ה מוכן/ה להתחיל.</b>
+        </p>
+        <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>המשך</button>
+        <script>
+            document.body.addEventListener('keydown', function(e) {
+                if (e.keyCode == 32) {
+                    e.preventDefault()
+                    document.getElementById('submitButton').click()
+
+                }
+            })
+        </script>
+    </div>
+</div>
+{% endblock %}

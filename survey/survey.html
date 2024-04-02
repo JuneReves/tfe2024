@@ -1,0 +1,20 @@
+{{ block title }}
+    אנא ענו על השאלות הבאות
+{{ endblock }}
+{{ block content }}
+<div style="text-align: right;" dir='rtl'>
+    <style>
+        textarea {
+            height:100px;
+        }
+    </style>
+    {% formfield player.exp_goal %}
+    {% formfield player.instructions %}
+    {% formfield player.felt_in_game %}
+    {% formfield player.repeat_inst %}
+    {% formfield player.comments %}
+    תודה על תרומתך למחקר!
+    </div>
+    <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary">המשך</button>
+    
+{{ endblock }}
