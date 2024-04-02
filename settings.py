@@ -19,7 +19,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name='Test_20',
-        app_sequence=['questionnaire','coin_flip', 'survey'],
+        app_sequence=['coin_flip'],
         num_demo_participants=5,
         condition=0.2,
         round_bonus=50,
@@ -27,7 +27,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name='Test_80',
-        app_sequence=['questionnaire','coin_flip', 'survey'],
+        app_sequence=['coin_flip'],
         num_demo_participants=5,
         condition=0.8,
         round_bonus=10,
