@@ -2,37 +2,22 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Main_20',
+        name='Main',
         app_sequence=['questionnaire','coin_flip', 'survey'],
         num_demo_participants=5,
-        condition=0.2,
-        round_bonus=50,
+        condition=[0.2,0.8],
+        round_bonus=[50,10],
         round_cut=30
     ),
     dict(
-        name='Main_80',
-        app_sequence=['questionnaire','coin_flip', 'survey'],
-        num_demo_participants=5,
-        condition=0.8,
-        round_bonus=10,
-        round_cut=30
-    ),
-    dict(
-        name='Test_20',
+        name='Test',
         app_sequence=['coin_flip'],
         num_demo_participants=5,
-        condition=0.2,
-        round_bonus=50,
+        condition=[0.2,0.8],
+        round_bonus=[50,10],
         round_cut=5
     ),
-    dict(
-        name='Test_80',
-        app_sequence=['coin_flip'],
-        num_demo_participants=5,
-        condition=0.8,
-        round_bonus=10,
-        round_cut=5
-    ),
+
 ]
 
 ROOMS = [
@@ -49,10 +34,10 @@ ROOMS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=0.334, participation_fee=0.00, doc="", condition=0.2, round_bonus=10, round_cut=30
+    real_world_currency_per_point=0.334, participation_fee=0.00, doc="", condition=[0.2,0.8], round_bonus=[50,10], round_cut=30
 )
 
-PARTICIPANT_FIELDS = []
+PARTICIPANT_FIELDS = ['treatment_group']
 SESSION_FIELDS = []
 
 # ISO-639 code

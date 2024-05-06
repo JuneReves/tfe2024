@@ -1,5 +1,5 @@
 {% extends "global/Page.html" %} {% load otree %} {% block content %}
-<div dir='rtl' style='text-align: right; overflow: auto'>
+<div dir='rtl' class='container-div'>
     <div style="width:100%;">
         <p>
             דירוגך הסופי הוא <b>{{rank}}</b> מתוך <b>{{players_num}}</b>.
@@ -14,23 +14,25 @@
     </div>
     <div>
         <p>
-            <table class="table">
+            <table class="table" style="font-size: small;">
                 <tr>
-                    <td>מספר הטלה</td>
-                    <td>עץ</td>
-                    <td>פלי</td>
-                    <td>תוצאה</td>
-                    <td>דירוג</td>
-                    <td>בונוס</td>
+                    <td width="15%" style="font-size: medium; background-color: azure;"><b>מספר הטלה</b></td>
+                    <td width="15%" style="font-size: medium; background-color: azure;"><b>עץ</b></td>
+                    <td width="15%" style="font-size: medium; background-color: azure;"><b>פלי</b></td>
+                    <td style="background-color: aliceblue">תוצאה</td>
+                    <td style="background-color: aliceblue">דירוג</td>
+                    <td style="background-color: aliceblue">בונוס</td>
+                    <td style="background-color: aliceblue">סה"כ</td>
                 </tr>
                 {% for i in data %}
                 <tr>
-                    <td>{{i.round}}</td>
-                    <td>{{i.heads}} ({{ i.heads_per }}%)</td>
-                    <td>{{i.tails}} ({{ i.tails_per }}%)</td>
-                    <td>{{i.result}} (ניחושך היה {{i.correctness}})</td>
-                    <td>{{i.percentile}}% ({{i.rank}} מתוך {{i.total}})</td>
-                    <td>{{i.payoff}} נקודות</td>
+                    <td style="font-size: medium; background-color: azure;"><b>{{i.round}}</b></td>
+                    <td style="font-size: medium; background-color: azure;"><b>{{i.heads}} ({{ i.heads_per }}%)</b></td>
+                    <td style="font-size: medium; background-color: azure;"><b>{{i.tails}} ({{ i.tails_per }}%)</b></td>
+                    <td style="background-color: aliceblue">{{i.result}} (ניחושך היה {{i.correctness}})</td>
+                    <td style="background-color: aliceblue">{{i.percentile}}% ({{i.rank}} מתוך {{i.total}})</td>
+                    <td style="background-color: aliceblue">{{i.payoff}} נקודות</td>
+                    <td style="background-color: aliceblue">{{i.c_payoff}} נקודות</td>
                 </tr>
                 {% endfor %}
             </table>

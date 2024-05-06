@@ -1,6 +1,10 @@
 {% extends "global/Page.html" %} {% load otree %} {% block content %}
-<div dir='rtl' style='text-align: right; overflow: auto'>
-    <div style="width:100%;">
+<div dir='rtl' class='container-div'>
+    {% if data1|length == 0 %}
+    <div style="width:100%; float: right;">
+    {% else %}
+    <div style="width:30%; float: right;">
+    {% endif %}
         <p style="color: grey">
             בניסוי זה יוטל מטבע 30 פעמים. עבור כל הטלה, יהיו לרשותך 30 שניות כדי לנחש האם תוצאת ההטלה תהיה עץ או פלי. בכל סבב, אם ניחשת נכון, ואם דורגת בין <b>{{percent}}% ({{ num }}) </b> המשתתפים שניחושיהם הם הקרובים ביותר לתוצאות האמיתיות של כל ההטלות עד כה, תזכה ב-<b>{{gain}}</b> נקודות בונוס, אחרת לא תזכה בנקודות בונוס עבור סבב זה. בצד המסך תראה את דירוגך במשחק ואת התפלגות ניחושי המשתתפים בין עץ לפלי בכל ההטלות שקדמו להטלה זו, במספרים ובאחוזים.        </p>
         <p>
@@ -8,9 +12,47 @@
         </p>
         <p><b>בחר/י את אחת מהאפשרויות, ולאחר מכן לחצ/י על מקש הרווח</b></p>
     </div>
+    {% if data1|length > 0 %}
+    <div style="width:60%; float: left; font-size: small;">
+        {% if split %}
+        <table class="table" style="width:50%; float: right">
+        {% else %}
+        <table class="table">
+        {% endif %}
+            <tr>
+                <td>מספר הטלה</td>
+                <td>עץ</td>
+                <td>פלי</td>
+            </tr>
+            {% for i in data1 %}
+            <tr>
+                <td>{{i.round}}</td>
+                <td>{{i.heads}} ({{ i.heads_per }}%)</td>
+                <td>{{i.tails}} ({{ i.tails_per }}%)</td>
+            </tr>
+            {% endfor %}
+            {% if split %}
+                <table class="table" style="width:50%; float: left">
+                    <tr>
+                        <td>מספר הטלה</td>
+                        <td>עץ</td>
+                        <td>פלי</td>
+                    </tr>
+                    {% for i in data2 %}
+                    <tr>
+                        <td>{{i.round}}</td>
+                        <td>{{i.heads}} ({{ i.heads_per }}%)</td>
+                        <td>{{i.tails}} ({{ i.tails_per }}%)</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+        </table>
+    </div>
+    {% endif %}
     <div>
         {% if subsession.round_number > 1 %}
-        <p>
+        <div>
             <table class="table">
                 <tr>
                     <td>מספר הטלה</td>
@@ -19,6 +61,7 @@
                     <td>תוצאה</td>
                     <td>דירוג</td>
                     <td>בונוס</td>
+                    <td>סה"כ</td>
                 </tr>
                 {% for i in data %}
                 <tr>
@@ -28,11 +71,12 @@
                     <td>{{i.result}} (ניחושך היה {{i.correctness}})</td>
                     <td>{{i.percentile}}% ({{i.rank}} מתוך {{i.total}})</td>
                     <td>{{i.payoff}} נקודות</td>
+                    <td>{{i.c_payoff}} נקודות</td>
                 </tr>
                 {% endfor %}
             </table>
-            {% endif %}
     </div>
+    {% endif %}
 </div>
 <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>המשך</button>
 <script>
