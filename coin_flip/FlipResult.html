@@ -1,84 +1,91 @@
 {% extends "global/Page.html" %} {% load otree %} {% block content %}
-<div dir='rtl' class='container-div'>
-    <div style="width:30%; float: right;">
+<div dir='ltr' class='container-div'>
+    <div style="width:30%; float: left;">
         <p style="color: grey">
-            בניסוי זה יוטל מטבע 30 פעמים. עבור כל הטלה, יהיו לרשותך 30 שניות כדי לנחש האם תוצאת ההטלה תהיה עץ או פלי. בכל סבב, אם ניחשת נכון, ואם דורגת בין <b>{{percent}}% ({{ num }}) </b> המשתתפים שניחושיהם הם הקרובים ביותר לתוצאות האמיתיות של כל ההטלות עד כה, תזכה ב-<b>{{gain}}</b> נקודות בונוס, אחרת לא תזכה בנקודות בונוס עבור סבב זה. בצד המסך תראה את דירוגך במשחק ואת התפלגות ניחושי המשתתפים בין עץ לפלי בכל ההטלות שקדמו להטלה זו, במספרים ובאחוזים.        </p>
+            In this experiment a coin will be tossed 30 times. For each toss, you will have 30 seconds to guess whether the outcome will be heads or tails. In each round, if you guessed correctly, and if you were ranked among the
+             <b>{{percent}}% of guessers ({{ num }})</b>  whose guesses are the closest to the true outcomes of all the coin tosses up to this point, you will earn-<b>{{gain}}</b> bonus points for this round.Otherwise, you will not win any points for this round. At the side of the screen, you will see your ranking in the game, as well as the distribution of all participant guesses between heads and tails for every preceding coin toss, in both numbers and percentages.
+            <br> The outcome of each coin toss will be displayed immediately following the end of the countdown.<br>
+            The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.<br>
+            <b>Please press the space bar when you are ready to begin.</b>
         <p>
-            הטלה {{ subsession.round_number }} מתוך {{ C.NUM_ROUNDS }}
+            Toss {{ subsession.round_number }} out of {{ C.NUM_ROUNDS }}
         </p>
         <p>
-            תוצאת הטלת המטבע הינה <b>{{coin_result}}</b> (התוצאה מוגרלת על ידי המחשב)
+            The outcome of the coin toss is <b>{{coin_result}}</b>
                 <br><br>
-                ניחושך היה <b>{{guess}}</b>
+                You guessed <b>{{guess}}</b>
                 <br><br>
-                בהתאם לכך דירוגך הוא <b>{{rank}}</b> מתוך {{total}} 
+                You are ranked <b>{{rank}}</b> out of {{total}} 
                 <br><br>
-                לכן <b>{{status}}</b> ב-{{gain}} נקודות בסבב זה.
+                Therefore, you <b>{{status}}</b> earn {{gain}} points in this round.
         </p>
-        <p><b>לחצ/י על מקש הרווח כדי להמשיך</b></p>
+        <p><b>Press the spacebar to continue.</b></p>
     </div>
-    <div style="width:60%; float: left; font-size: small;">
+    <div style="width:60%; float: right; font-size: small;">
         {% if split %}
-        <table class="table" style="width:50%; float: right">
+        <table class="table" style="width:50%; float: left">
         {% else %}
         <table class="table">
         {% endif %}
-            <tr>
-                <td>מספר הטלה</td>
-                <td>עץ</td>
-                <td>פלי</td>
-            </tr>
-            {% for i in data1 %}
-            <tr>
-                <td>{{i.round}}</td>
-                <td>{{i.heads}} ({{ i.heads_per }}%)</td>
-                <td>{{i.tails}} ({{ i.tails_per }}%)</td>
-            </tr>
-            {% endfor %}
-            {% if split %}
-                <table class="table" style="width:50%; float: left">
-                    <tr>
-                        <td>מספר הטלה</td>
-                        <td>עץ</td>
-                        <td>פלי</td>
-                    </tr>
-                    {% for i in data2 %}
-                    <tr>
-                        <td>{{i.round}}</td>
-                        <td>{{i.heads}} ({{ i.heads_per }}%)</td>
-                        <td>{{i.tails}} ({{ i.tails_per }}%)</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            {% endif %}
-        </table>
-    </div>
+        <tr>
+            <td>Toss #</td>
+            <td>Heads</td>
+            <td>Tails</td>
+        </tr>
+        {% for i in data1 %}
+        <tr>
+            <td>{{i.round}}</td>
+            <td>{{i.heads}} ({{ i.heads_per }}%)</td>
+            <td>{{i.tails}} ({{ i.tails_per }}%)</td>
+        </tr>
+        {% endfor %}
+        {% if split %}
+            <table class="table" style="width:50%; float: right">
+                <tr>
+                    <td>Toss #</td>
+                    <td>Heads</td>
+                    <td>Tails</td>
+                </tr>
+                {% for i in data2 %}
+                <tr>
+                    <td>{{i.round}}</td>
+                    <td>{{i.heads}} ({{ i.heads_per }}%)</td>
+                    <td>{{i.tails}} ({{ i.tails_per }}%)</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+    </table>
+</div>
+{% endif %}
+<div>
+    {% if subsession.round_number > 1 %}
     <div>
         <table class="table">
             <tr>
-                <td>מספר הטלה</td>
-                <td>עץ</td>
-                <td>פלי</td>
-                <td>תוצאה</td>
-                <td>דירוג</td>
-                <td>בונוס</td>
-                <td>סה"כ</td>
+                <td>Toss #</td>
+                <td>Heads</td>
+                <td>Tails</td>
+                <td>Outcome</td>
+                <td>Ranking</td>
+                <td>Points won in round</td>
+                <td>Total points</td>
             </tr>
-            {% for i in data1 %}
+            {% for i in data %}
             <tr>
                 <td>{{i.round}}</td>
                 <td>{{i.heads}} ({{ i.heads_per }}%)</td>
                 <td>{{i.tails}} ({{ i.tails_per }}%)</td>
-                <td>{{i.result}} (ניחושך היה {{i.correctness}})</td>
-                <td>{{i.percentile}}% ({{i.rank}} מתוך {{i.total}})</td>
-                <td>{{i.payoff}} נקודות</td>
-                <td>{{i.c_payoff}} נקודות</td>
+                <td>{{i.result}} (your guess was {{i.correctness}})</td>
+                <td>{{i.percentile}}% ({{i.rank}} out of {{i.total}})</td>
+                <td>{{i.payoff}} points</td>
+                <td>{{i.c_payoff}} points</td>
             </tr>
             {% endfor %}
-        </table>
+                </table>
     </div>
 </div>
-<button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>המשך</button>
+<button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>Continue</button>
 <script>
     document.body.addEventListener('keydown', function(e) {
         if (e.keyCode == 32) {

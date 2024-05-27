@@ -1,14 +1,14 @@
 {% extends "global/Page.html" %} {% load otree %} {% block content %}
-<div dir='rtl' class='container-div'>
+<div dir='ltr' class='container-div'>
     <div>
         <p>
-            בחלק זה יוטל מטבע עשר פעמים. עבור כל הטלה, יהיו לרשותך 30 שניות כדי לנחש האם תוצאת ההטלה תהיה עץ או פלי.<br> אם תהיה/תהיי בין <b>{{percent}}% המשתתפים ({{ num }})</b> שניחושם הוא הקרוב ביותר לתוצאות האמיתיות של ההטלה, תזכה/י ב-<b>{{gain}}</b> נקודות עבור כל
-            ניחוש נכון, אחרת לא תזכה/י בנקודות כלל.
-            <br> בצד המסך תראה/י את התפלגות ניחושי המשתתפים בין עץ לפלי בכל ההטלות שקדמו להטלה זו, במספרים ובאחוזים.<br>
-            התוצאות האמיתיות של הטלת המטבע יוצגו מיד עם תום הספירה לאחור עבור כל ניחוש.<br>
-            <b>לחצ/י על מקש הרווח כאשר את/ה מוכן/ה להתחיל.</b>
+            In this experiment a coin will be tossed 30 times. For each toss, you will have 30 seconds to guess whether the outcome will be heads or tails. In each round, if you guessed correctly, and if you were ranked among the
+             <b>{{percent}}% of guessers ({{ num }})</b>  whose guesses are the closest to the true outcomes of all the coin tosses up to this point, you will earn-<b>{{gain}}</b> bonus points for this round.Otherwise, you will not win any points for this round. At the side of the screen, you will see your ranking in the game, as well as the distribution of all participant guesses between heads and tails for every preceding coin toss, in both numbers and percentages.
+            <br> The outcome of each coin toss will be displayed immediately following the end of the countdown.<br>
+            The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.<br>
+            <b>Please press the space bar when you are ready to begin.</b>
         </p>
-        <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>המשך</button>
+        <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>continue</button>
         <script>
             document.body.addEventListener('keydown', function(e) {
                 if (e.keyCode == 32) {

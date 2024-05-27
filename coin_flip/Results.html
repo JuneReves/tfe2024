@@ -2,23 +2,21 @@
 <div dir='rtl' class='container-div'>
     <div style="width:100%;">
         <p>
-            דירוגך הסופי הוא <b>{{rank}}</b> מתוך <b>{{players_num}}</b>.
+            Your final ranking is <b>{{rank}}</b> out of <b>{{players_num}}</b>.
             <br><br>
-            זכית ב-<b>{{wins}}</b> סבבים מתוך 30, ובסך הכול זכית ב-{{points}} נקודות.
+            You earned points in <b>{{wins}}</b> outo of 30.
+            In total, you earned {{points}} points.
             <br><br>
-            בסך הכול הרווחת <b>{{points}}</b> נקודות, כלומר <b>{{payoff}}</b> שקלים.
-            <br><br>
-            לחץ על מקש הרווח כדי להמשיך לשאלון הסיכום, ובסיומו גש לנסיינים לקבלת התשלום.
         </p>
-        <p><b>לחצ/י על מקש הרווח כדי להמשיך</b></p>
+        <p><b>Please press the space bar to complete the experiment.</b></p>
     </div>
     <div>
         <p>
             <table class="table" style="font-size: small;">
                 <tr>
-                    <td width="15%" style="font-size: medium; background-color: azure;"><b>מספר הטלה</b></td>
-                    <td width="15%" style="font-size: medium; background-color: azure;"><b>עץ</b></td>
-                    <td width="15%" style="font-size: medium; background-color: azure;"><b>פלי</b></td>
+                    <td width="15%" style="font-size: medium; background-color: azure;"><b>Toss #</b></td>
+                    <td width="15%" style="font-size: medium; background-color: azure;"><b>Heads</b></td>
+                    <td width="15%" style="font-size: medium; background-color: azure;"><b>Tails</b></td>
                     <td style="background-color: aliceblue">תוצאה</td>
                     <td style="background-color: aliceblue">דירוג</td>
                     <td style="background-color: aliceblue">בונוס</td>
@@ -29,16 +27,16 @@
                     <td style="font-size: medium; background-color: azure;"><b>{{i.round}}</b></td>
                     <td style="font-size: medium; background-color: azure;"><b>{{i.heads}} ({{ i.heads_per }}%)</b></td>
                     <td style="font-size: medium; background-color: azure;"><b>{{i.tails}} ({{ i.tails_per }}%)</b></td>
-                    <td style="background-color: aliceblue">{{i.result}} (ניחושך היה {{i.correctness}})</td>
-                    <td style="background-color: aliceblue">{{i.percentile}}% ({{i.rank}} מתוך {{i.total}})</td>
-                    <td style="background-color: aliceblue">{{i.payoff}} נקודות</td>
-                    <td style="background-color: aliceblue">{{i.c_payoff}} נקודות</td>
+                    <td style="background-color: aliceblue">{{i.result}} (your guess was {{i.correctness}})</td>
+                    <td style="background-color: aliceblue">{{i.percentile}}% ({{i.rank}} out of {{i.total}})</td>
+                    <td style="background-color: aliceblue">{{i.payoff}} points</td>
+                    <td style="background-color: aliceblue">{{i.c_payoff}} points</td>
                 </tr>
                 {% endfor %}
             </table>
     </div>
 </div>
-<button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>המשך</button>
+<button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>continue</button>
 <script>
     document.body.addEventListener('keydown', function(e) {
         if (e.keyCode == 32) {
