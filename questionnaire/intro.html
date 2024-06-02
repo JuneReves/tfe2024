@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %} {% load otree %} {% block content %}
+<div dir='ltr' class='container-div'>
+    <div>
+        <p>
+            Thank you for agreeing to participate in this study.<br /><br />
+            This study will take approximately 30 minutes. Through your participation, you will be able to earn points based on your responses as part of an experiment combining elements of luck, interpersonal interaction, and answering questions. At the end of the experiment, you will participate in a lottery with the other participants in this game, in which you will have a 1/5 chance of receiving a bonus payment based on the number of points earned, at a ratio of: 30 points = 1 GBP.
+            <br /><br />
+            Please press the space bar to proceed to the next screen        </p>
+        <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>continue</button>
+        <script>
+            document.body.addEventListener('keydown', function(e) {
+                if (e.keyCode == 32) {
+                    e.preventDefault()
+                    document.getElementById('submitButton').click()
+
+                }
+            })
+        </script>
+    </div>
+</div>
+{% endblock %}

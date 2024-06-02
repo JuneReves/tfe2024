@@ -1,6 +1,6 @@
 {% extends "global/Page.html" %} {% load otree %} {% block content %}
 <div dir='ltr' class='container-div'>
-    <div style="width:30%; float: left;">
+    <div style="width:50%; float: left;">
         <p style="color: grey">
             In this experiment a coin will be tossed 30 times. For each toss, you will have 30 seconds to guess whether the outcome will be heads or tails. In each round, if you guessed correctly, and if you were ranked among the
              <b>{{percent}}% of guessers ({{ num }})</b>  whose guesses are the closest to the true outcomes of all the coin tosses up to this point, you will earn-<b>{{gain}}</b> bonus points for this round.Otherwise, you will not win any points for this round. At the side of the screen, you will see your ranking in the game, as well as the distribution of all participant guesses between heads and tails for every preceding coin toss, in both numbers and percentages.
@@ -21,7 +21,7 @@
         </p>
         <p><b>Press the spacebar to continue.</b></p>
     </div>
-    <div style="width:60%; float: right; font-size: small;">
+    <div style="width:40%; float: right; font-size: small;">
         {% if split %}
         <table class="table" style="width:50%; float: left">
         {% else %}
@@ -57,7 +57,6 @@
         {% endif %}
     </table>
 </div>
-{% endif %}
 <div>
     {% if subsession.round_number > 1 %}
     <div>
@@ -84,6 +83,7 @@
             {% endfor %}
                 </table>
     </div>
+    {% endif %}
 </div>
 <button name="submitButton" id="submitButton" class="otree-btn-next btn btn-primary" style='visibility: hidden;'>Continue</button>
 <script>

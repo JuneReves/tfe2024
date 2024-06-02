@@ -1,9 +1,9 @@
 {% extends "global/Page.html" %} {% load otree %} {% block content %}
-<div dir='rtl' class='container-div'>
+<div dir='ltr' class='container-div'>
     {% if data1|length == 0 %}
     <div style="width:100%; float: left;">
     {% else %}
-    <div style="width:30%; float: left;">
+    <div style="width:50%; float: left;">
     {% endif %}
         <p style="color: grey">
             In this experiment a coin will be tossed 30 times. For each toss, you will have 30 seconds to guess whether the outcome will be heads or tails. In each round, if you guessed correctly, and if you were ranked among the
@@ -18,7 +18,7 @@
         <p><b>Choose one of the options, then press the spacebar to proceed.</b></p>
     </div>
     {% if data1|length > 0 %}
-    <div style="width:60%; float: left; font-size: small;">
+    <div style="width:40%; float: right; font-size: small;">
         {% if split %}
         <table class="table" style="width:50%; float: left">
         {% else %}

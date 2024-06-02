@@ -1,5 +1,6 @@
 {{ block title }}
-אנא ענו על השאלות הבאות{{ endblock }}
+Prolific ID
+{{ endblock }}
 {{ block content }}
 
 <style>
@@ -11,65 +12,12 @@
         direction: rtl;
     }
 </style>
-<div dir='rtl' style='text-align: right;'>
+<div dir='ltr' style='text-align: left;'>
     <p>
-        מגדר: {{ form.gender }}
+        Please enter your prolific ID: <br />
+        {{form.prolific_id}}
     </p>
-    <p>
-        גיל: {{ form.age }}
-    </p>
-    <p>
-        ארץ לידה {{ form.birth_country }}
-    </p>
-    <p id='Aliya_p' style="pointer-events: none;">
-        שנת עליה: {{ form.alyia_year }}
-    </p>
-    <p>
-        חוג לימודים: {{ form.field_of_study }} לתואר: {{ form.degree }} שנה: {{ form.degree_year }}
-    </p>
-    <p>
-        מספר יחידות בבגרות במתמטיקה: {{ form.math_units }}
-    </p>
-    <p>
-        ממוצע ציונים עד כה בלימודי התואר הנוכחי(אם אינך בטוח/ה, אנא כתוב/כתבי הערכה): {{ form.grades_average }}
-    </p>
-    <p>
-        האם את/ה עובד/ת? {{ form.work_status }}
-    </p>
-    <p>
-        איך את/ה מגדיר/ה את עצמך? {{ form.religious_status }}
-    </p>
-    <p>
-        האם את/ה מעשן/ת? {{ form.smoking }}
-    </p>
-    <p>
-        האם עישנת בעבר? {{ form.past_smoking }}
-    </p>
-    <p>
-        האם יש לך ביטוח חיים? {{ form.Life_insurance }}
-    </p>
-    <p>
-        האם יש לך ביטוח פנסיוני? {{ form.pension }}
-    </p>
-    <p>
-        באיזו תדירות את/ה עוקב/ת אחרי התנועות בחשבון הבנק הבנק שלך? {{ form.bank_freq }}
-    </p>
-    <p>
-        באיזו תדירות את/ה נמצא/ת בחריגה כספית (מינוס) בחשבון הבנק שלך? {{ form.overdraft_freq }}
-    </p>
-    <p>
-        בעזרת מספרים בין 0 ל-10, כאשר 0 מייצג שאין שום סיכוי ו-10 מייצג ודאות מלאה, מה לדעתך הסיכוי שתגיע/י לגיל 85? {{ form.age_85 }}
-    </p>
-    <p>
-        בעזרת מספרים בין 0 ל-10 כאשר 0 מייצג שאין שום סיכוי ו-10 מייצג ודאות מלאה, מה לדעתך הסיכוי שתגיע/י לגיל 95? {{ form.age_95 }}
-    </p>
-    <p>
-        הנח/י כי את/ה עומד/ת לקבל סכום של 3,000 ₪ לחשבונך באופן מיידי. במקום זאת אנו מציעים לך לקבל סכום כסף בעוד שנה מהיום. מה הסכום המינימאלי אותו תהיה/תהיי מוכן/ה לקבל בעוד שנה מהיום במקום 3,000 ₪ היום? {{ form.money_in_a_year }}
-    </p>
-    <p>
-        דמיין/י לעצמך שמוצע לך לרכוש כרטיס להגרלה שבה 10 משתתפים (כך שהסיכוי שלך לזכות הוא 1 ל-10). הפרס הוא סכום כספי בסך 2,000 ש" ח. מה הסכום המקסימלי שתהיה/תהיי מוכן/ה לשלם לרכישת הכרטיס? אני מוכן/ה לשלם לכל היותר {{form.Lottery}}₪ בכדי לרכוש את כרטיס ההגרלה.
-    </p>
-    <button name="submit" id="submitButton" class="otree-btn-next btn btn-primary">המשך</button>
+    <button name="submit" id="submitButton" class="otree-btn-next btn btn-primary">Continue</button>
 </div>
 <script>
     var aliya_p = document.getElementById('Aliya_p')

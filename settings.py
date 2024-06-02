@@ -3,7 +3,7 @@ from os import environ
 SESSION_CONFIGS = [
     dict(
         name='Main',
-        app_sequence=['questionnaire','coin_flip', 'survey'],
+        app_sequence=['questionnaire','coin_flip', 'last_page'],
         num_demo_participants=5,
         condition=[0.2,0.8],
         round_bonus=[50,10],
@@ -11,7 +11,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name='Test',
-        app_sequence=['coin_flip'],
+        app_sequence=['coin_flip', 'last_page'],
         num_demo_participants=5,
         condition=[0.2,0.8],
         round_bonus=[50,10],
@@ -38,7 +38,7 @@ SESSION_CONFIG_DEFAULTS = dict(
 )
 
 PARTICIPANT_FIELDS = ['treatment_group']
-SESSION_FIELDS = []
+SESSION_FIELDS = ['first_player_arrived']
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans

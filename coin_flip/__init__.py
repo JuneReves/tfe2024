@@ -2,6 +2,7 @@ from otree.api import *
 import random
 from math import floor, ceil
 from copy import copy
+from time import time
 
 doc = """
 Your app description
@@ -9,17 +10,17 @@ Your app description
 
 class T:
         COIN_RESULTS = {
-            'Heads': 'עץ',
-            'Tails': 'פלי',
+            'Heads': 'Heads',
+            'Tails': 'Tales',
             '': ''
         }
         CORRECTNESS = {
-            True: 'נכון',
-            False: 'לא נכון'
+            True: 'correct',
+            False: 'incorrect'
         }
         WONLOSS = {
-            True: 'זכית',
-            False: 'לא זכית'
+            True: 'did',
+            False: 'did not'
         }
 
 class C(BaseConstants):
@@ -27,10 +28,11 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 30
     TREATMENTS = [1,2]
-
+    WAIT_FOR_PARTICIPANTS = 20
 
 def creating_session(subsession):
     if subsession.round_number == 1:
+        subsession.session.first_player_arrived = 0
         treatments = C.TREATMENTS
         players_per_treatment = (len(subsession.get_players()) // len(treatments)) + (len(subsession.get_players()) % len(treatments))
         treatments = treatments * (players_per_treatment)
@@ -38,6 +40,10 @@ def creating_session(subsession):
         for i, player in enumerate(subsession.get_players()):
             player.participant.treatment_group = treatments[i]
     subsession.flip_coin()
+
+def set_start_time(subsession):
+    if subsession.session.first_player_arrived == 0:
+        subsession.session.first_player_arrived = time()
 
 
 
@@ -230,7 +236,6 @@ class FlipPage(Page):
             data2 = data2,
             data = data,
             split = split_table,
-            timer_text = 'זמן שנותר לבחירה:'
         )
     
 
@@ -263,7 +268,6 @@ class FlipResult(Page):
             data2 = data2,
             data = data,
             split = split_table,
-            timer_text = 'הניסוי ימשיך באופן אוטומטי בעוד:'
         )
     
 
@@ -302,25 +306,55 @@ class afterRoundPage(WaitPage):
         subsession.sort_and_reward(2)
 
 
-    title_text = 'אנא המתן'
-    body_text = 'יש להמתין שכל השחקנים יסיימו את התור. מיד לאחר מכן תמשיך הלאה באופן אוטומטי.'
+    title_text = 'Please wait'
+    body_text = 'For all players.'
 
 class waitPage(WaitPage):
     wait_for_all_groups = True
-    title_text = 'אנא המתן'
-    body_text = 'יש להמתין שכל השחקנים יסיימו את התור. מיד לאחר מכן תמשיך הלאה באופן אוטומטי.'
+    title_text = 'Please wait'
+    body_text = 'For all players.'
 
 
-class waitToStart(WaitPage):
-    wait_for_all_groups = True
+
+class waitToStart(Page):
+    @staticmethod
+    def get_timeout_seconds(player):
+        timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)
+        if timer <= 0:
+            player.participant.vars['dropout'] = True
+            return 0
+        else:
+            player.participant.vars['dropout'] = False
+            return timer
+        
+
+    def app_after_this_page(player, upcoming_apps):
+        if player.participant.vars['dropout']:
+            return 'last_page'
+
+
     def is_displayed(player):
         return player.round_number == 1
-    title_text = 'מיד מתחילים'
-    body_text = 'הניסוי יתחיל מיד לאחר שכל השחקנים יהיו מוכנים.'
+    title_text = "Please wait"
+    body_text = 'The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.'
 
 class InstructionPage(Page):
+
+
+
+    @staticmethod
+    def get_timeout_seconds(player):
+        timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)
+        if timer <= 0:
+            player.participant.vars['dropout'] = True
+            return 0
+        else:
+            return timer
     def is_displayed(player):
-        return player.round_number == 1
+        if player.round_number == 1:
+            set_start_time(player.subsession)
+            return True
+        return False
     def vars_for_template(player):
         num_of_players = floor(player.get_cond()*len(player.get_same_treatment_players()))
         return dict(
