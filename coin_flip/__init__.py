@@ -28,7 +28,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 30
     TREATMENTS = [1,2]
-    WAIT_FOR_PARTICIPANTS = 20
+    WAIT_FOR_PARTICIPANTS = 120
 
 def creating_session(subsession):
     if subsession.round_number == 1:
