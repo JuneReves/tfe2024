@@ -33,6 +33,7 @@ class C(BaseConstants):
 def creating_session(subsession):
     if subsession.round_number == 1:
         subsession.session.first_player_arrived = 0
+        subsession.session.redefined_groups = False
         treatments = C.TREATMENTS
         players_per_treatment = (len(subsession.get_players()) // len(treatments)) + (len(subsession.get_players()) % len(treatments))
         treatments = treatments * (players_per_treatment)
@@ -71,13 +72,10 @@ class Subsession(BaseSubsession):
         tails = 0
         players = subsession.get_players_by_treatment(treatment)
         for p in players:
-            print(p.participant.code, subsession.round_number)
             if p.choice == 'Heads':
                 heads+=1
-                print('heads')
             elif p.choice == 'Tails':
                 tails+=1
-                print('tails')
         return heads, tails
 
 
@@ -295,9 +293,9 @@ class Results(Page):
         )
 
 class afterRoundPage(WaitPage):
-    wait_for_all_groups = True
     @staticmethod
-    def after_all_players_arrive(subsession):
+    def after_all_players_arrive(group):
+        subsession = group.subsession
         subsession.count_and_set_responses()
         
         subsession.set_scores()
@@ -310,7 +308,6 @@ class afterRoundPage(WaitPage):
     body_text = 'For all players.'
 
 class waitPage(WaitPage):
-    wait_for_all_groups = True
     title_text = 'Please wait'
     body_text = 'For all players.'
 
@@ -332,6 +329,22 @@ class waitToStart(Page):
         if player.participant.vars['dropout']:
             return 'last_page'
 
+    def before_next_page(player, timeout_happened):
+        if not player.session.redefined_groups:
+            all_players = player.subsession.get_players()
+            active_players = []
+            dropouts = []
+            for p in all_players:
+                if 'dropout' in p.participant.vars:
+                    if not p.participant.vars['dropout']:
+                        active_players.append(p)
+                        continue
+                dropouts.append(p)
+            player.subsession.set_group_matrix([
+                [p.participant.id_in_session for p in active_players],
+                [p.participant.id_in_session for p in dropouts]
+            ])
+            player.session.redefined_groups = True
 
     def is_displayed(player):
         return player.round_number == 1
@@ -339,9 +352,6 @@ class waitToStart(Page):
     body_text = 'The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.'
 
 class InstructionPage(Page):
-
-
-
     @staticmethod
     def get_timeout_seconds(player):
         timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)

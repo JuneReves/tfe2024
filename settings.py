@@ -37,8 +37,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=0.334, participation_fee=0.00, doc="", condition=[0.2,0.8], round_bonus=[50,10], round_cut=30
 )
 
-PARTICIPANT_FIELDS = ['treatment_group']
-SESSION_FIELDS = ['first_player_arrived']
+PARTICIPANT_FIELDS = ['treatment_group', 'dropout']
+SESSION_FIELDS = ['first_player_arrived', 'redefined_groups']
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
