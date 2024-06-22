@@ -11,7 +11,7 @@ Your app description
 class T:
         COIN_RESULTS = {
             'Heads': 'Heads',
-            'Tails': 'Tales',
+            'Tails': 'Tails',
             '': ''
         }
         CORRECTNESS = {
@@ -27,19 +27,20 @@ class C(BaseConstants):
     NAME_IN_URL = 'cf'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 30
-    TREATMENTS = [1,2]
+    # TREATMENTS = [1,2]
     WAIT_FOR_PARTICIPANTS = 120
 
 def creating_session(subsession):
     if subsession.round_number == 1:
         subsession.session.first_player_arrived = 0
         subsession.session.redefined_groups = False
-        treatments = C.TREATMENTS
-        players_per_treatment = (len(subsession.get_players()) // len(treatments)) + (len(subsession.get_players()) % len(treatments))
-        treatments = treatments * (players_per_treatment)
-        random.shuffle(treatments)
+        # treatments = C.TREATMENTS
+        # players_per_treatment = (len(subsession.get_players()) // len(treatments)) + (len(subsession.get_players()) % len(treatments))
+        # treatments = treatments * (players_per_treatment)
+        # random.shuffle(treatments)
+        t = subsession.session.config['treatment_group']
         for i, player in enumerate(subsession.get_players()):
-            player.participant.treatment_group = treatments[i]
+            player.participant.treatment_group = t
     subsession.flip_coin()
 
 def set_start_time(subsession):
@@ -305,11 +306,11 @@ class afterRoundPage(WaitPage):
 
 
     title_text = 'Please wait'
-    body_text = 'For all players.'
+    body_text = 'Please wait for all participants to arrive.'
 
 class waitPage(WaitPage):
     title_text = 'Please wait'
-    body_text = 'For all players.'
+    body_text = 'Please wait for all participants to arrive.'
 
 
 

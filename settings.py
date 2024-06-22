@@ -2,20 +2,38 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Main',
+        name='Main20',
         app_sequence=['questionnaire','coin_flip', 'last_page'],
         num_demo_participants=5,
-        condition=[0.2,0.8],
-        round_bonus=[50,10],
+        condition=[0.2,0.2], #In the original version, there were tow treatments in each run.
+        round_bonus=[50,50], #This part of the code is kept to rush deployment.
         round_cut=30
     ),
     dict(
-        name='Test',
+        name='Test20',
         app_sequence=['coin_flip', 'last_page'],
         num_demo_participants=5,
-        condition=[0.2,0.8],
-        round_bonus=[50,10],
+        condition=[0.2,0.2],
+        round_bonus=[50,50],
         round_cut=5
+    ),
+    dict(
+        name='Main80',
+        app_sequence=['questionnaire','coin_flip', 'last_page'],
+        num_demo_participants=5,
+        condition=[0.8,0.8],
+        round_bonus=[10,10],
+        round_cut=30,
+        treatment=2
+    ),
+    dict(
+        name='Test80',
+        app_sequence=['coin_flip', 'last_page'],
+        num_demo_participants=5,
+        condition=[0.8,0.8],
+        round_bonus=[10,10],
+        round_cut=5,
+        treatment=2
     ),
 
 ]
@@ -34,7 +52,7 @@ ROOMS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=0.334, participation_fee=0.00, doc="", condition=[0.2,0.8], round_bonus=[50,10], round_cut=30
+    real_world_currency_per_point=0.334, participation_fee=0.00, doc="", condition=[0.2,0.8], round_bonus=[50,10], round_cut=30, treatment_group=1
 )
 
 PARTICIPANT_FIELDS = ['treatment_group', 'dropout']
