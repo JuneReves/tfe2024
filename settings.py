@@ -24,7 +24,7 @@ SESSION_CONFIGS = [
         condition=[0.8,0.8],
         round_bonus=[10,10],
         round_cut=30,
-        treatment=2
+        treatment_group=2
     ),
     dict(
         name='Test80',
@@ -33,7 +33,7 @@ SESSION_CONFIGS = [
         condition=[0.8,0.8],
         round_bonus=[10,10],
         round_cut=5,
-        treatment=2
+        treatment_group=2
     ),
 
 ]
@@ -52,7 +52,14 @@ ROOMS = [
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=0.334, participation_fee=0.00, doc="", condition=[0.2,0.8], round_bonus=[50,10], round_cut=30, treatment_group=1
+    real_world_currency_per_point=0.334,
+    participation_fee=0.00,
+    doc="", condition=[0.2,0.8],
+    round_bonus=[50,10],
+    round_cut=30,
+    treatment_group=1,
+    tails_name='Jane',
+    heads_name='Jill'
 )
 
 PARTICIPANT_FIELDS = ['treatment_group', 'dropout']

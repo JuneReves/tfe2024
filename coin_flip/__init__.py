@@ -9,11 +9,6 @@ Your app description
 """
 
 class T:
-        COIN_RESULTS = {
-            'Heads': 'Heads',
-            'Tails': 'Tails',
-            '': ''
-        }
         CORRECTNESS = {
             True: 'correct',
             False: 'incorrect'
@@ -41,6 +36,7 @@ def creating_session(subsession):
         t = subsession.session.config['treatment_group']
         for i, player in enumerate(subsession.get_players()):
             player.participant.treatment_group = t
+
     subsession.flip_coin()
 
 def set_start_time(subsession):
@@ -55,6 +51,13 @@ class Subsession(BaseSubsession):
     numOfTails_c1 = models.IntegerField(default=0)
     numOfHeads_c2 = models.IntegerField(default=0)
     numOfTails_c2 = models.IntegerField(default=0)
+
+    def coin_sides(subsession, text): # To quickly compensate for the change of heads and tales
+        if text.lower() == 'heads':
+            return subsession.session.config['heads_name']
+        if text.lower() == 'tails':
+            return subsession.session.config['tails_name']
+        return ''
 
 
     def get_players_by_treatment(subsession, treatment):
@@ -90,6 +93,7 @@ class Subsession(BaseSubsession):
                                 key=lambda p: p.score)
         winning_cut = max(floor(subsession.session.config['condition'][treatment-1]*len(sorted_players)),1)
         winning_score = copy(sorted_players[winning_cut-1].score)
+    
         r = 0
         d = 1
         cur = -1 #current lowest score
@@ -130,13 +134,13 @@ class Player(BasePlayer):
 
     #True for heads, False for tails
     choice = models.StringField(
-        choices = [
-            ['Heads', T.COIN_RESULTS['Heads']],
-            ['Tails', T.COIN_RESULTS['Tails']]           
-        ],
         initial='',
-        widget=widgets.RadioSelectHorizontal,
+        choices=['Heads', 'Tails']
+        # widget=widgets.RadioSelectHorizontal,
     )
+    def choice_choices(player):
+        return [['Heads', player.session.config['heads_name']], ['Tails', player.session.config['heads_name']]]           
+
     score = models.IntegerField(default=0)
     rank = models.IntegerField(default=0, min=0)
     cumulativePayoff = models.CurrencyField(default=0)
@@ -188,7 +192,7 @@ class Player(BasePlayer):
             'tails': tails[i],
             'tails_per': tails_per[i],
             'correctness': T.CORRECTNESS[correct_guesses[i]],
-            'result': T.COIN_RESULTS[flip_results[i]],
+            'result': player.subsession.coin_sides(flip_results[i]),
             'rank': player.in_round(i+1).rank,
             'total': players_num,
             'percentile': floor(100*player.in_round(i+1).rank/players_num),
@@ -235,6 +239,8 @@ class FlipPage(Page):
             data2 = data2,
             data = data,
             split = split_table,
+            heads = player.subsession.session.config['heads_name'],
+            tails = player.subsession.session.config['tails_name'],
         )
     
 
@@ -254,8 +260,8 @@ class FlipResult(Page):
             data2 = []
         data.reverse()
         return dict(
-            coin_result = T.COIN_RESULTS[player.subsession.coinResult],
-            guess = T.COIN_RESULTS[player.choice],
+            coin_result = player.subsession.coin_sides(player.subsession.coinResult),
+            guess = player.subsession.coin_sides(player.choice),
             rank = player.rank,
             total = players_num,
             status = T.WONLOSS[player.payoff>0],
@@ -267,6 +273,8 @@ class FlipResult(Page):
             data2 = data2,
             data = data,
             split = split_table,
+            heads = player.subsession.session.config['heads_name'],
+            tails = player.subsession.session.config['tails_name'],
         )
     
 
@@ -291,6 +299,8 @@ class Results(Page):
             points = int(player.participant.payoff),
             payoff = player.participant.payoff_plus_participation_fee(),
             data = data,
+            heads = player.subsession.session.config['heads_name'],
+            tails = player.subsession.session.config['tails_name'],
         )
 
 class afterRoundPage(WaitPage):
@@ -301,8 +311,7 @@ class afterRoundPage(WaitPage):
         
         subsession.set_scores()
         
-        subsession.sort_and_reward(1)
-        subsession.sort_and_reward(2)
+        subsession.sort_and_reward(subsession.session.config['treatment_group'])
 
 
     title_text = 'Please wait'
@@ -371,7 +380,9 @@ class InstructionPage(Page):
         return dict(
             num = num_of_players,
             gain = int(player.get_bonus()),
-            percent = int(player.get_cond()*100)
+            percent = int(player.get_cond()*100),
+            heads = player.subsession.session.config['heads_name'],
+            tails = player.subsession.session.config['tails_name'],
         )
     
 
