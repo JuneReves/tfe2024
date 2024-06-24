@@ -2,7 +2,7 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Main20',
+        name='JillJane_20',
         app_sequence=['questionnaire','coin_flip', 'last_page'],
         num_demo_participants=5,
         condition=[0.2,0.2], #In the original version, there were tow treatments in each run.
@@ -10,15 +10,18 @@ SESSION_CONFIGS = [
         round_cut=30
     ),
     dict(
-        name='Test20',
-        app_sequence=['coin_flip', 'last_page'],
+        name='JaneJill_20',
+        app_sequence=['questionnaire','coin_flip', 'last_page'],
         num_demo_participants=5,
-        condition=[0.2,0.2],
-        round_bonus=[50,50],
-        round_cut=5
+        condition=[0.2,0.2], #In the original version, there were tow treatments in each run.
+        round_bonus=[50,50], #This part of the code is kept to rush deployment.
+        round_cut=30,
+        heads='Jane',
+        tails='Jill'
+
     ),
     dict(
-        name='Main80',
+        name='JillJane_80',
         app_sequence=['questionnaire','coin_flip', 'last_page'],
         num_demo_participants=5,
         condition=[0.8,0.8],
@@ -27,13 +30,15 @@ SESSION_CONFIGS = [
         treatment_group=2
     ),
     dict(
-        name='Test80',
-        app_sequence=['coin_flip', 'last_page'],
+        name='JaneJill_80',
+        app_sequence=['questionnaire','coin_flip', 'last_page'],
         num_demo_participants=5,
         condition=[0.8,0.8],
         round_bonus=[10,10],
-        round_cut=5,
-        treatment_group=2
+        round_cut=30,
+        treatment_group=2,
+        heads='Jane',
+        tails='Jill'
     ),
 
 ]
