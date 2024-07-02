@@ -2,16 +2,13 @@
 <div dir='ltr' class='container-div'>
     <div style="width:50%; float: left;">
         <p style="color: grey">
-            In this experiment a coin will be tossed 30 times. For each toss, you will have 30 seconds to guess whether the outcome will be {{ heads }} or {{ tails }}. In each round, if you guessed correctly, and if you were ranked among the
-             <b>{{percent}}% of guessers ({{ num }})</b>  whose guesses are the closest to the true outcomes of all the coin tosses up to this point, you will earn -<b>{{gain}}</b> bonus points for this round.Otherwise, you will not win any points for this round. At the side of the screen, you will see your ranking in the game, as well as the distribution of all participant guesses between {{ heads }} and {{ tails }} for every preceding coin toss, in both numbers and percentages.
-            <br> The outcome of each coin toss will be displayed immediately following the end of the countdown.<br>
-            The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.<br>
-            <b>Please press the space bar when you are ready to begin.</b>
+            In this experiment a bet will be made 30 times consecutively between two individuals, {{ heads }} and {{ tails }}. For each bet, you will have 30 seconds to guess whether the winner will be {{ heads }} or {{ tails }}. In each round, if you guessed correctly, and if you were ranked among the  <b>{{percent}}% of guessers ({{ num }})</b> whose guesses are the closest to the true outcomes of all the bets up to this point, you will earn 10 bonus points for this round. Otherwise, you will not win any points for this round. At the side of the screen, you will see your ranking in the game, as well as the distribution of all participant guesses between {{ heads }} and {{ tails }} for every preceding bet, in both numbers and percentages.
+            <br> The outcome of each bet will be displayed immediately following the end of the countdown.<br>
         <p>
-            Toss {{ subsession.round_number }} out of {{ C.NUM_ROUNDS }}
+            Bet {{ subsession.round_number }} out of {{ C.NUM_ROUNDS }}
         </p>
         <p>
-            The outcome of the coin toss is <b>{{coin_result}}</b>
+            The outcome of the bet is <b>{{coin_result}}</b>
                 <br><br>
                 You guessed <b>{{guess}}</b>
                 <br><br>
@@ -28,7 +25,7 @@
         <table class="table">
         {% endif %}
         <tr>
-            <td>Toss #</td>
+            <td>Bet #</td>
             <td>{{ heads }}</td>
             <td>{{ tails }}</td>
         </tr>
@@ -42,7 +39,7 @@
         {% if split %}
             <table class="table" style="width:50%; float: right">
                 <tr>
-                    <td>Toss #</td>
+                    <td>Bet #</td>
                     <td>{{ heads }}</td>
                     <td>{{ tails }}</td>
                 </tr>
@@ -62,7 +59,7 @@
     <div>
         <table class="table">
             <tr>
-                <td>Toss #</td>
+                <td>Bet #</td>
                 <td>{{ heads }}</td>
                 <td>{{ tails }}</td>
                 <td>Outcome</td>

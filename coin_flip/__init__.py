@@ -285,7 +285,7 @@ class Results(Page):
         return player.round_number == round_cut
     
     def app_after_this_page(player, upcoming_apps):
-        return 'survey'
+        return 'last_page'
 
     def vars_for_template(player):
         players_num = len(player.get_same_treatment_players())
