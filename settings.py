@@ -16,8 +16,8 @@ SESSION_CONFIGS = [
         condition=[0.2,0.2], #In the original version, there were tow treatments in each run.
         round_bonus=[50,50], #This part of the code is kept to rush deployment.
         round_cut=30,
-        heads='Jane',
-        tails='Jill'
+        heads_name='Jane',
+        tails_name='Jill'
 
     ),
     dict(
@@ -37,8 +37,8 @@ SESSION_CONFIGS = [
         round_bonus=[10,10],
         round_cut=30,
         treatment_group=2,
-        heads='Jane',
-        tails='Jill'
+        heads_name='Jane',
+        tails_name='Jill'
     ),
 
 ]
