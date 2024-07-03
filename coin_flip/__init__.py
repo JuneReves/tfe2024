@@ -1,6 +1,6 @@
 from otree.api import *
-import random
-from math import floor, ceil
+from random import randint
+from math import floor
 from copy import copy
 from time import time
 
@@ -29,10 +29,6 @@ def creating_session(subsession):
     if subsession.round_number == 1:
         subsession.session.first_player_arrived = 0
         subsession.session.redefined_groups = False
-        # treatments = C.TREATMENTS
-        # players_per_treatment = (len(subsession.get_players()) // len(treatments)) + (len(subsession.get_players()) % len(treatments))
-        # treatments = treatments * (players_per_treatment)
-        # random.shuffle(treatments)
         t = subsession.session.config['treatment_group']
         for i, player in enumerate(subsession.get_players()):
             player.participant.treatment_group = t
@@ -67,7 +63,7 @@ class Subsession(BaseSubsession):
     
 
     def flip_coin(subsession):
-        subsession.coinResult = 'Heads' if random.uniform(0, 1) == 1 else 'Tails'
+        subsession.coinResult = 'Heads' if randint(0, 1) == 1 else 'Tails'
     
 
     #count responses
