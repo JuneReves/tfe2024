@@ -21,7 +21,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    prolific_id = models.StringField(min_length=7, max_length=15)
+    prolific_id = models.StringField(min_length=2, max_length=50)
 
 # PAGES
 class questionnaire(Page):
