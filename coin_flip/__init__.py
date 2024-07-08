@@ -17,6 +17,8 @@ class T:
             True: 'did',
             False: 'did not'
         }
+        START_TIMER_TEXT = 'Time left before the experiment begins:'
+
 
 class C(BaseConstants):
     NAME_IN_URL = 'cf'
@@ -320,6 +322,7 @@ class waitPage(WaitPage):
 
 
 class waitToStart(Page):
+    timer_text = T.START_TIMER_TEXT
     @staticmethod
     def get_timeout_seconds(player):
         timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)
@@ -358,6 +361,7 @@ class waitToStart(Page):
     body_text = 'The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.'
 
 class InstructionPage(Page):
+    timer_text = T.START_TIMER_TEXT
     @staticmethod
     def get_timeout_seconds(player):
         timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)
@@ -368,7 +372,6 @@ class InstructionPage(Page):
             return timer
     def is_displayed(player):
         if player.round_number == 1:
-            set_start_time(player.subsession)
             return True
         return False
     def vars_for_template(player):
