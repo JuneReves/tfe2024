@@ -326,6 +326,11 @@ class waitToStart(WaitPage):
     wait_for_all_groups = True
     title_text = T.PW
     body_text = T.WAIT_TO_START
+    def is_displayed(player):
+        if player.round_number == 1:
+            return True
+        return False
+
 
 
 class InstructionPage(Page):
