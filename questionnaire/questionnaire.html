@@ -19,20 +19,4 @@ Prolific ID
     </p>
     <button name="submit" id="submitButton" class="otree-btn-next btn btn-primary">Continue</button>
 </div>
-<script>
-    var aliya_p = document.getElementById('Aliya_p')
-
-    function hide_year(e) {
-        str = e.target.value.replace(/\s/g, '')
-        if (str == 'ישראל' || str.toLowerCase() == 'israel') {
-            aliya_p.style['pointer-events'] = 'none'
-            document.getElementById('id_alyia_year').value = ''
-            document.getElementById('id_alyia_year').style['background-color'] = '#D3D3D3'
-        } else {
-            aliya_p.style['pointer-events'] = 'all'
-            document.getElementById('id_alyia_year').style['background-color'] = 'white'
-        }
-    }
-    document.getElementById('id_birth_country').addEventListener('input', hide_year)
-</script>    
 {{ endblock }}

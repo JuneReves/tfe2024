@@ -26,10 +26,11 @@ class Player(BasePlayer):
 
 # PAGES
 class EndPage(Page):
-    def vars_for_template(player):
-        return {
-            'dropout': player.participant.vars['dropout']
-        }
+    # def vars_for_template(player):
+    #     return {
+    #         'dropout': player.participant.vars['dropout']
+    #     }
+    pass
 
 class ResultsWaitPage(WaitPage):
     pass

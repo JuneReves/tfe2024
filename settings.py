@@ -45,8 +45,8 @@ SESSION_CONFIGS = [
 
 ROOMS = [
         dict(
-        name='test',
-        display_name='Test Room'
+        name='exp',
+        display_name='Main Room'
     ),
 
 ]

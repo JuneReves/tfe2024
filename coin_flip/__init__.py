@@ -17,7 +17,9 @@ class T:
             True: 'did',
             False: 'did not'
         }
-        START_TIMER_TEXT = 'Time left before the experiment begins:'
+        WAIT_FOR_ALL = 'Please wait for all participants to arrive'
+        WAIT_TO_START = 'The game will begin once all participants have announced that they are ready.'
+        PW = 'Please wait'
 
 
 class C(BaseConstants):
@@ -25,7 +27,6 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 30
     # TREATMENTS = [1,2]
-    WAIT_FOR_PARTICIPANTS = 120
 
 def creating_session(subsession):
     if subsession.round_number == 1:
@@ -302,9 +303,9 @@ class Results(Page):
         )
 
 class afterRoundPage(WaitPage):
+    wait_for_all_groups = True
     @staticmethod
-    def after_all_players_arrive(group):
-        subsession = group.subsession
+    def after_all_players_arrive(subsession):
         subsession.count_and_set_responses()
         
         subsession.set_scores()
@@ -312,64 +313,22 @@ class afterRoundPage(WaitPage):
         subsession.sort_and_reward(subsession.session.config['treatment_group'])
 
 
-    title_text = 'Please wait'
-    body_text = 'Please wait for all participants to arrive.'
+    title_text = T.PW
+    body_text = T.WAIT_FOR_ALL
 
 class waitPage(WaitPage):
-    title_text = 'Please wait'
-    body_text = 'Please wait for all participants to arrive.'
+    title_text = T.PW
+    body_text = T.WAIT_FOR_ALL
 
 
 
-class waitToStart(Page):
-    timer_text = T.START_TIMER_TEXT
-    @staticmethod
-    def get_timeout_seconds(player):
-        timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)
-        if timer <= 0:
-            player.participant.vars['dropout'] = True
-            return 0
-        else:
-            player.participant.vars['dropout'] = False
-            return timer
-        
+class waitToStart(WaitPage):
+    wait_for_all_groups = True
+    title_text = T.PW
+    body_text = T.WAIT_TO_START
 
-    def app_after_this_page(player, upcoming_apps):
-        if player.participant.vars['dropout']:
-            return 'last_page'
-
-    def before_next_page(player, timeout_happened):
-        if not player.session.redefined_groups:
-            all_players = player.subsession.get_players()
-            active_players = []
-            dropouts = []
-            for p in all_players:
-                if 'dropout' in p.participant.vars:
-                    if not p.participant.vars['dropout']:
-                        active_players.append(p)
-                        continue
-                dropouts.append(p)
-            player.subsession.set_group_matrix([
-                [p.participant.id_in_session for p in active_players],
-                [p.participant.id_in_session for p in dropouts]
-            ])
-            player.session.redefined_groups = True
-
-    def is_displayed(player):
-        return player.round_number == 1
-    title_text = "Please wait"
-    body_text = 'The game will begin once all participants have announced that they are ready. There may be a delay of up to 120 seconds (two minutes) until this happens.'
 
 class InstructionPage(Page):
-    timer_text = T.START_TIMER_TEXT
-    @staticmethod
-    def get_timeout_seconds(player):
-        timer = C.WAIT_FOR_PARTICIPANTS - (time() - player.session.first_player_arrived)
-        if timer <= 0:
-            player.participant.vars['dropout'] = True
-            return 0
-        else:
-            return timer
     def is_displayed(player):
         if player.round_number == 1:
             return True
